@@ -1,11 +1,12 @@
-package service;
+package com.webapp.service;
 
+import com.webapp.model.FilmEntity;
+import com.webapp.model.GenreEntity;
+import com.webapp.repository.FilmRepository;
 import lombok.RequiredArgsConstructor;
-import model.FilmEntity;
-import model.GenreEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import repository.FilmRepository;
+
 
 import java.util.List;
 import java.util.Optional;

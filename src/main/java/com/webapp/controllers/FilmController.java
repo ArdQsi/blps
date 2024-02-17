@@ -1,9 +1,10 @@
-package controllers;
+package com.webapp.controllers;
 
-import model.FilmEntity;
+import com.webapp.model.FilmEntity;
+import com.webapp.service.FilmService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import service.FilmService;
+
 
 import java.util.List;
 import java.util.Optional;

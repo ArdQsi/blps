@@ -1,8 +1,9 @@
-package repository;
+package com.webapp.repository;
 
 import java.util.*;
-import model.FilmEntity;
-import model.GenreEntity;
+
+import com.webapp.model.FilmEntity;
+import com.webapp.model.GenreEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
