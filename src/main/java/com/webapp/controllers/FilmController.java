@@ -1,5 +1,6 @@
 package com.webapp.controllers;
 
+import com.webapp.dto.FilmDto;
 import com.webapp.model.FilmEntity;
 import com.webapp.service.FilmService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,10 +8,9 @@ import org.springframework.web.bind.annotation.*;
 
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
-@RequestMapping("/film")
+@RequestMapping("/rutube.ru")
 public class FilmController {
     @Autowired
     private FilmService filmService;
@@ -19,9 +19,9 @@ public class FilmController {
         return filmService.getAllFilm();
     }
 
-    @PostMapping("/select")
-    public Optional<FilmEntity> findFilm(@RequestBody Long id){
-        return filmService.getFilm(id);
+    @PostMapping("/video")
+    public String findFilm(@RequestBody FilmDto data){
+        return filmService.getFilm(data.getFilmId(), data.getUserId());
     }
 
 }
