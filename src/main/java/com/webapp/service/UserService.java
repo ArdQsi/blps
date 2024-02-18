@@ -11,6 +11,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
+import java.util.Calendar;
 import java.util.Objects;
 
 @Service
@@ -50,6 +52,19 @@ public class UserService {
             throw new NotFoundException("Такого пользователя не существует!");
         }
         return null;
+    }
+
+    public void updateSubscriptionEndDate(Long id){
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        UserEntity user = userRepository.findUserById(id);
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(timestamp);
+        calendar.add(Calendar.DATE,30);
+        timestamp.setTime(calendar.getTime().getTime());
+
+        user.setSubscriptionEndDate(timestamp);
+        userRepository.save(user);
     }
 
 }
