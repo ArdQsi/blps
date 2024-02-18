@@ -1,6 +1,7 @@
 package com.webapp.service;
 
 import com.webapp.dto.FilmDto;
+import com.webapp.dto.GenreDto;
 import com.webapp.exceptioin.NotFoundException;
 import com.webapp.model.FilmEntity;
 import com.webapp.model.GenreEntity;
@@ -71,6 +72,14 @@ public class FilmService {
         genreEntity.getFilms().add(filmEntity);
 
         filmRepository.save(filmEntity);
+        genreRepository.save(genreEntity);
+        return null;
+    }
+
+    public List<GenreEntity> addGenre(GenreDto genreDto) {
+        GenreEntity genreEntity = new GenreEntity();
+        genreEntity.setName(genreDto.getName());
+
         genreRepository.save(genreEntity);
         return null;
     }

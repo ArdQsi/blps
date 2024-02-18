@@ -51,6 +51,9 @@ public class UserService {
         if (userEntity == null) {
             throw new NotFoundException("Такого пользователя не существует!");
         }
+        if(!userEntity.getPassword().equals(authenticationRequest.getPassword())){
+            throw new NotFoundException("Пароли не совпадают");
+        }
         return null;
     }
 
