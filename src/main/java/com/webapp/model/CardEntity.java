@@ -21,7 +21,8 @@ public class CardEntity {
     private String name;
     private String surname;
 
-    @OneToMany(mappedBy = "card")
-    private List<UserEntity> users;
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private UserEntity user;
 
 }

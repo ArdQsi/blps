@@ -4,6 +4,7 @@ import com.webapp.dto.CardDto;
 import com.webapp.exceptioin.NotFoundException;
 import com.webapp.model.CardEntity;
 import com.webapp.repository.CardRepository;
+import com.webapp.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
@@ -18,6 +19,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class CardService {
     private final CardRepository cardRepository;
+    private final UserRepository userRepository;
 
     public void saveCard(CardDto cardDto){
 
@@ -31,6 +33,7 @@ public class CardService {
         card.setYear(cardDto.getYear());
         card.setName(cardDto.getName());
         card.setSurname(cardDto.getSurname());
+        card.setUser(userRepository.findUserById(cardDto.getUserId().longValue()));
         cardRepository.save(card);
     }
 
@@ -48,12 +51,10 @@ public class CardService {
         if(!(cardDto.getMonth()<=12 && cardDto.getMonth()>=1)){
             return false;
         }
-        if(!(cardDto.getYear()>date.getYear())){
-            if(cardDto.getYear()==date.getYear()){
-                if(!(cardDto.getMonth()>=date.getMonthValue())){
-                    return false;
-                }
-            }
+        if(cardDto.getYear()<date.getYear()){
+            return false;
+        }
+        if(cardDto.getYear()==date.getYear() && cardDto.getMonth()<date.getMonthValue()){
             return false;
         }
         return true;

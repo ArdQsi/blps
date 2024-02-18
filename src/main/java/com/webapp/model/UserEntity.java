@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 
@@ -27,8 +28,8 @@ public class UserEntity {
     private String email;
     private String password;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private CardEntity card;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+    private List<CardEntity> cards;
 
     @ManyToMany
     @JoinTable(

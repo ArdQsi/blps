@@ -7,10 +7,11 @@ import java.util.List;
 
 @Data
 public class CardDto {
+    private Integer userId;
     private String number;
     private int month;
     private int year;
     private String name;
     private String surname;
-    private Long cvc;
+    private Integer cvc;
 }

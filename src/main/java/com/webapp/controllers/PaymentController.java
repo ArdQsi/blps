@@ -23,6 +23,7 @@ public class PaymentController {
             cardService.saveCard(cardDto);
         }
         catch (NotFoundException e){
+            System.out.println(e);
             return ResponseEntity.badRequest().build();
         }
         return ResponseEntity.ok(cardDto);
