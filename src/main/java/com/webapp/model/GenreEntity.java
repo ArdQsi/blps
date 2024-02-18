@@ -15,6 +15,8 @@ public class GenreEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
+
+    private String name;
     @ManyToMany
     @JoinTable(
             name = "film_genre",
