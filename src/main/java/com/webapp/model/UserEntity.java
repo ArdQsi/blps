@@ -1,6 +1,7 @@
 package com.webapp.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -21,7 +22,7 @@ public class UserEntity {
     private Integer id;
     private String firstname;
     private String lastname;
-    @Pattern(regexp = "^[a-zA-Z][a-zA-Z0-9]+@{1}[a-zA-Z]{2,}[.]{1}[a-zA-Z]{2,4}$")
+    @Email
     private String email;
     private String password;
 
