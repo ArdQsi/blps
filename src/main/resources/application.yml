@@ -2,9 +2,9 @@ server:
   port: 8080
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/blps
-    username: postgres
-    password: DenDenvv
+    url:
+    username:
+    password:
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
