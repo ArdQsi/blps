@@ -27,7 +27,7 @@ public class FilmEntity {
             joinColumns = @JoinColumn(name="film_id"),
             inverseJoinColumns = @JoinColumn(name = "genre_id")
     )
-    private Set<GenreEntity> genre = new HashSet<GenreEntity>();
+    private Set<GenreEntity> genres = new HashSet<GenreEntity>();
 
     @ManyToMany
     @JoinTable(

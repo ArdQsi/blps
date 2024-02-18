@@ -1,14 +1,17 @@
 package com.webapp.service;
 
+import com.webapp.dto.FilmDto;
 import com.webapp.exceptioin.NotFoundException;
 import com.webapp.model.FilmEntity;
 import com.webapp.model.GenreEntity;
 import com.webapp.model.UserEntity;
 import com.webapp.repository.FilmRepository;
+import com.webapp.repository.GenreRepository;
 import com.webapp.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import java.util.HashSet;
+import java.util.Set;
 
 
 import java.sql.Timestamp;
@@ -20,6 +23,7 @@ public class FilmService {
 
     private final UserRepository userRepository;
     private final FilmRepository filmRepository;
+    private final GenreRepository genreRepository;
     private final UserService userService;
 
     public List<FilmEntity> getAllFilm() {
@@ -45,11 +49,29 @@ public class FilmService {
         return film.getToken();
     }
 
-    public List<FilmEntity> findFilmByGenre(GenreEntity genre) {
-        return filmRepository.findFilmByGenre(genre);
-    }
 
     public List<FilmEntity> findFilmByYear(String year) {
         return filmRepository.findFilmByYear(year);
+    }
+
+    public List<FilmEntity> findFilmByName(String name) {
+        return filmRepository.findFilmByName(name);
+    }
+
+    public List<FilmEntity> addFilm(FilmDto filmDto) {
+        FilmEntity filmEntity = new FilmEntity();
+        GenreEntity genreEntity = genreRepository.findByName(filmDto.getGenre());
+        filmEntity.setName(filmDto.getName());
+        filmEntity.setYear(filmDto.getYear());
+        filmEntity.setSubscription(filmDto.getSubscription());
+        filmEntity.setDescription(filmDto.getDescription());
+        filmEntity.setToken(filmDto.getToken());
+
+        filmEntity.getGenres().add(genreEntity);
+        genreEntity.getFilms().add(filmEntity);
+
+        filmRepository.save(filmEntity);
+        genreRepository.save(genreEntity);
+        return null;
     }
 }

@@ -15,11 +15,7 @@ public class GenreEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
-    @ManyToMany
-    @JoinTable(
-            name = "film_genre",
-            joinColumns = @JoinColumn(name="genre_id"),
-            inverseJoinColumns = @JoinColumn(name = "film_id")
-    )
-    private Set<FilmEntity> genre = new HashSet<FilmEntity>();
+    private String name;
+    @ManyToMany(mappedBy = "genres")
+    private Set<FilmEntity> films = new HashSet<FilmEntity>();
 }

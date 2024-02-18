@@ -1,10 +1,16 @@
 package com.webapp.dto;
 
-
+import com.webapp.model.GenreEntity;
 import lombok.Data;
+
+import java.util.Set;
 
 @Data
 public class FilmDto {
-    private Long filmId;
-    private Long userId;
+    private String name;
+    private String year;
+    private String description;
+    private Boolean subscription;
+    private String token;
+    private String genre;
 }
