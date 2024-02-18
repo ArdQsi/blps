@@ -12,7 +12,7 @@ import java.util.List;
 @Table(name="card")
 public class CardEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String number;

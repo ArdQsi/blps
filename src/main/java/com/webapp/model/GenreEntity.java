@@ -13,7 +13,7 @@ import java.util.Set;
 @Table(name="genre")
 public class GenreEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;
