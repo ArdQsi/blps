@@ -14,7 +14,7 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class FilmService {
-    @Autowired
+
     private FilmRepository filmRepository;
 
     public List<FilmEntity> getAllFilm() {
