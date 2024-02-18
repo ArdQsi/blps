@@ -15,7 +15,9 @@ public class GenreEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String name;
     @ManyToMany(mappedBy = "genres")
     private Set<FilmEntity> films = new HashSet<FilmEntity>();
+
 }
