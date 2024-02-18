@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 
@@ -31,8 +32,8 @@ public class UserEntity {
     private Timestamp subscriptionEndDate;
     private String password;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private CardEntity card;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+    private List<CardEntity> cards;
 
     @ManyToMany
     @JoinTable(

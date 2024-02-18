@@ -34,15 +34,14 @@ public class FilmService {
         }
         if (film.hasSubscription()){
             if(user.getSubscriptionEndDate() != null && user.getSubscriptionEndDate().after(new Timestamp(System.currentTimeMillis()))) {
-                //есть подписка
                 userService.addFilmToHistory(filmId, userId);
                 System.out.println("есть актуальная подписка");
+                userService.addFilmToHistory(filmId, userId);
+                return film.getToken();
             }
-            //заплатить за подписку
-
+            return null;
         }
         userService.addFilmToHistory(filmId, userId);
-
         return film.getToken();
     }
 
