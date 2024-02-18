@@ -3,6 +3,7 @@ package com.webapp.controllers;
 import com.webapp.dto.FilmDto;
 import com.webapp.model.FilmEntity;
 import com.webapp.service.FilmService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,10 +11,11 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/rutube.ru")
 public class FilmController {
-    @Autowired
-    private FilmService filmService;
+
+    private final FilmService filmService;
     @GetMapping("/all")
     public List<FilmEntity> findAllFilm(){
         return filmService.getAllFilm();

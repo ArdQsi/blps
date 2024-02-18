@@ -16,10 +16,9 @@ import java.util.Objects;
 @Service
 @RequiredArgsConstructor
 public class UserService {
-    @Autowired
-    private UserRepository userRepository;
-    @Autowired
-    private FilmRepository filmRepository;
+
+    private final UserRepository userRepository;
+    private final FilmRepository filmRepository;
 
     public void addFilmToHistory(Long filmId, Long userId) {
         UserEntity user = userRepository.findUserById(userId);

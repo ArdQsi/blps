@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/rutube.ru/auth")
 @RequiredArgsConstructor
 public class AuthenticationController {
-    @Autowired
-    private UserService userService;
+
+    private final UserService userService;
     @PostMapping("/register")
     public ResponseEntity<UserEntity> register(@RequestBody RegisterRequest request) {
         return ResponseEntity.ok(userService.register(request));
