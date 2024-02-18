@@ -16,10 +16,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class FilmService {
 
-    @Autowired
-    private UserService userService;
-    @Autowired
-    private FilmRepository filmRepository;
+    private final UserService userService;
+    private final FilmRepository filmRepository;
 
     public List<FilmEntity> getAllFilm() {
         return filmRepository.findAll();
