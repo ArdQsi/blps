@@ -11,6 +11,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -26,6 +27,9 @@ public class UserEntity {
     private String email;
     private String password;
 
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private CardEntity card;
+
     @ManyToMany
     @JoinTable(
             name = "user_history",
@@ -33,5 +37,6 @@ public class UserEntity {
             inverseJoinColumns = @JoinColumn(name="film_id")
     )
     private Set<FilmEntity> userFilm = new HashSet<FilmEntity>();
+
 }
 
