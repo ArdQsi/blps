@@ -23,7 +23,7 @@ import java.util.Set;
 public class UserEntity {
     @Id
     @GeneratedValue
-    private Integer id;
+    private Long id;
     private String firstname;
     private String lastname;
     @Email

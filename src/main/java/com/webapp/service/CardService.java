@@ -3,6 +3,7 @@ package com.webapp.service;
 import com.webapp.dto.CardDto;
 import com.webapp.exceptioin.NotFoundException;
 import com.webapp.model.CardEntity;
+import com.webapp.model.UserEntity;
 import com.webapp.repository.CardRepository;
 import com.webapp.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -20,11 +21,18 @@ import java.util.Optional;
 public class CardService {
     private final CardRepository cardRepository;
     private final UserRepository userRepository;
+    private final UserService userService;
 
     public void saveCard(CardDto cardDto){
 
         if(!checkCard(cardDto)){
             throw new NotFoundException("Incorrect card data");
+        }
+
+        UserEntity userEntity = userRepository.findUserById(cardDto.getUserId());
+
+        if(userEntity==null){
+            throw new NotFoundException("Incorrect user id");
         }
 
         CardEntity card = new CardEntity();
@@ -33,8 +41,10 @@ public class CardService {
         card.setYear(cardDto.getYear());
         card.setName(cardDto.getName());
         card.setSurname(cardDto.getSurname());
-        card.setUser(userRepository.findUserById(cardDto.getUserId().longValue()));
+        card.setUser(userEntity);
+
         cardRepository.save(card);
+        userService.updateSubscriptionEndDate(cardDto.getUserId());
     }
 
     private boolean checkCard(CardDto cardDto){
