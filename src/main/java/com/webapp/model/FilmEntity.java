@@ -18,6 +18,8 @@ public class FilmEntity {
     private String name;
     private String year;
     private String description;
+    private boolean subscription;
+    private String token;
 
     @ManyToMany
     @JoinTable(
@@ -26,4 +28,17 @@ public class FilmEntity {
             inverseJoinColumns = @JoinColumn(name = "genre_id")
     )
     private Set<GenreEntity> genre = new HashSet<GenreEntity>();
+
+    @ManyToMany
+    @JoinTable(
+            name = "user_history",
+            joinColumns = @JoinColumn(name="film_id"),
+            inverseJoinColumns = @JoinColumn(name="user_id")
+    )
+    private Set<UserEntity> filmUser = new HashSet<UserEntity>();
+
+    public boolean hasSubscription(){
+        return subscription;
+    }
+
 }

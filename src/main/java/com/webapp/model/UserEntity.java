@@ -6,7 +6,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
+
 
 
 @Data
@@ -26,5 +28,14 @@ public class UserEntity {
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private CardEntity card;
+
+    @ManyToMany
+    @JoinTable(
+            name = "user_history",
+            joinColumns = @JoinColumn(name="user_id"),
+            inverseJoinColumns = @JoinColumn(name="film_id")
+    )
+    private Set<FilmEntity> userFilm = new HashSet<FilmEntity>();
+
 }
 
