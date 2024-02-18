@@ -17,11 +17,7 @@ public class GenreEntity {
     private Long id;
 
     private String name;
-    @ManyToMany
-    @JoinTable(
-            name = "film_genre",
-            joinColumns = @JoinColumn(name="genre_id"),
-            inverseJoinColumns = @JoinColumn(name = "film_id")
-    )
-    private Set<FilmEntity> genre = new HashSet<FilmEntity>();
+    @ManyToMany(mappedBy = "genres")
+    private Set<FilmEntity> films = new HashSet<FilmEntity>();
+
 }

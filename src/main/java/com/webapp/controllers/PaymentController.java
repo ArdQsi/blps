@@ -1,15 +1,11 @@
 package com.webapp.controllers;
 
 import com.webapp.dto.CardDto;
-import com.webapp.dto.FilmDto;
 import com.webapp.exceptioin.NotFoundException;
-import com.webapp.model.FilmEntity;
 import com.webapp.service.CardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
