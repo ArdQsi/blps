@@ -7,6 +7,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -25,6 +27,8 @@ public class UserEntity {
     private String lastname;
     @Email
     private String email;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Timestamp subscriptionEndDate;
     private String password;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
