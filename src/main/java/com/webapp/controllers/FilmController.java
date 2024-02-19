@@ -3,14 +3,13 @@ package com.webapp.controllers;
 import com.webapp.dto.FilmDto;
 import com.webapp.dto.FilmUserDto;
 import com.webapp.dto.GenreDto;
+import com.webapp.dto.MessageDto;
 import com.webapp.model.FilmEntity;
-import com.webapp.model.GenreEntity;
 import com.webapp.service.FilmService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 
-import javax.swing.text.html.parser.Entity;
 import java.util.List;
 
 @RestController
@@ -30,12 +29,12 @@ public class FilmController {
     }
 
     @PostMapping("/addfilm")
-    public List<FilmEntity> addFilm(@RequestBody FilmDto filmDto) {
+    public MessageDto addFilm(@RequestBody FilmDto filmDto) {
         return filmService.addFilm(filmDto);
     }
 
     @PostMapping("/addgenre")
-    public List<GenreEntity> addFilm(@RequestBody GenreDto genreDto) {
+    public MessageDto addFilm(@RequestBody GenreDto genreDto) {
         return filmService.addGenre(genreDto);
     }
 

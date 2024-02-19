@@ -2,7 +2,10 @@ package com.webapp.service;
 
 import com.webapp.dto.FilmDto;
 import com.webapp.dto.GenreDto;
-import com.webapp.exceptioin.NotFoundException;
+import com.webapp.dto.MessageDto;
+import com.webapp.exceptioin.ResourceAlreadyExistsException;
+import com.webapp.exceptioin.ResourceNotAllowedException;
+import com.webapp.exceptioin.ResourceNotFoundException;
 import com.webapp.model.FilmEntity;
 import com.webapp.model.GenreEntity;
 import com.webapp.model.UserEntity;
@@ -11,8 +14,6 @@ import com.webapp.repository.GenreRepository;
 import com.webapp.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import java.util.HashSet;
-import java.util.Set;
 
 
 import java.sql.Timestamp;
@@ -35,16 +36,14 @@ public class FilmService {
         FilmEntity film = filmRepository.findFilmById(filmId);
         UserEntity user = userRepository.findUserById(userId);
         if (film == null) {
-            new NotFoundException("Фильм не существует!");
+            throw new ResourceNotFoundException("The movie doesn't exist");
         }
         if (film.hasSubscription()){
             if(user.getSubscriptionEndDate() != null && user.getSubscriptionEndDate().after(new Timestamp(System.currentTimeMillis()))) {
                 userService.addFilmToHistory(filmId, userId);
-                System.out.println("есть актуальная подписка");
-                userService.addFilmToHistory(filmId, userId);
                 return film.getToken();
             }
-            return null;
+            throw new ResourceNotAllowedException("Access is denied");
         }
         userService.addFilmToHistory(filmId, userId);
         return film.getToken();
@@ -55,32 +54,40 @@ public class FilmService {
         return filmRepository.findFilmByYear(year);
     }
 
-    public List<FilmEntity> findFilmByName(String name) {
+    public FilmEntity findFilmByName(String name) {
         return filmRepository.findFilmByName(name);
     }
 
-    public List<FilmEntity> addFilm(FilmDto filmDto) {
-        FilmEntity filmEntity = new FilmEntity();
+    public MessageDto addFilm(FilmDto filmDto) {
+        FilmEntity filmEntity = filmRepository.findFilmByName(filmDto.getName());
+        if (filmEntity != null) {
+            throw new ResourceAlreadyExistsException("This movie already exists");
+        }
+        FilmEntity newFilmEntity = new FilmEntity();
         GenreEntity genreEntity = genreRepository.findByName(filmDto.getGenre());
-        filmEntity.setName(filmDto.getName());
-        filmEntity.setYear(filmDto.getYear());
-        filmEntity.setSubscription(filmDto.getSubscription());
-        filmEntity.setDescription(filmDto.getDescription());
-        filmEntity.setToken(filmDto.getToken());
+        newFilmEntity.setName(filmDto.getName());
+        newFilmEntity.setYear(filmDto.getYear());
+        newFilmEntity.setSubscription(filmDto.getSubscription());
+        newFilmEntity.setDescription(filmDto.getDescription());
+        newFilmEntity.setToken(filmDto.getToken());
 
-        filmEntity.getGenres().add(genreEntity);
-        genreEntity.getFilms().add(filmEntity);
+        newFilmEntity.getGenres().add(genreEntity);
+        genreEntity.getFilms().add(newFilmEntity);
 
-        filmRepository.save(filmEntity);
+        filmRepository.save(newFilmEntity);
         genreRepository.save(genreEntity);
-        return null;
+        return new MessageDto("Movie added successfully");
     }
 
-    public List<GenreEntity> addGenre(GenreDto genreDto) {
-        GenreEntity genreEntity = new GenreEntity();
-        genreEntity.setName(genreDto.getName());
+    public MessageDto addGenre(GenreDto genreDto) {
+        GenreEntity genreEntity = genreRepository.findByName(genreDto.getName());
+        if (genreEntity != null) {
+            throw new ResourceAlreadyExistsException("This genre already exists");
+        }
+        GenreEntity newGenreEntity = new GenreEntity();
+        newGenreEntity.setName(genreDto.getName());
 
-        genreRepository.save(genreEntity);
-        return null;
+        genreRepository.save(newGenreEntity);
+        return new MessageDto("Genre added successfully");
     }
 }
