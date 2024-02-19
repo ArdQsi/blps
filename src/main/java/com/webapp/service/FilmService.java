@@ -33,21 +33,23 @@ public class FilmService {
         return filmRepository.findAll();
     }
 
-    public String getFilm(Long filmId, Long userId) {
-        FilmEntity film = filmRepository.findFilmById(filmId);
+    public MessageDto getFilm(String token, Long userId) {
+        FilmEntity film = filmRepository.findFilmByToken(token);
         UserEntity user = userRepository.findUserById(userId);
+        System.out.println(userId);
+        System.out.println(user);
         if (film == null) {
             throw new ResourceNotFoundException("The movie doesn't exist");
         }
         if (film.hasSubscription()){
             if(user.getSubscriptionEndDate() != null && user.getSubscriptionEndDate().after(new Timestamp(System.currentTimeMillis()))) {
-                userService.addFilmToHistory(filmId, userId);
-                return film.getToken();
+                userService.addFilmToHistory(film.getId(), userId);
+                return new MessageDto("Watching a movie");
             }
             throw new ResourceNotAllowedException("Access is denied");
         }
-        userService.addFilmToHistory(filmId, userId);
-        return film.getToken();
+        userService.addFilmToHistory(film.getId(), userId);
+        return new MessageDto("Watching a movie");
     }
 
 

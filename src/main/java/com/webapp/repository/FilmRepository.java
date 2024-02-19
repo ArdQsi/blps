@@ -13,6 +13,7 @@ public interface FilmRepository extends JpaRepository<FilmEntity, Long> {
     FilmEntity findFilmByName(String name);
 
     FilmEntity findFilmById(Long id);
+    FilmEntity findFilmByToken(String token);
 
     List<FilmEntity> findFilmByYear(String year);
 }

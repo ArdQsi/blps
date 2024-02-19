@@ -16,12 +16,12 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthenticationController {
 
     private final UserService userService;
-    @PostMapping("/register")
+    @PostMapping("/registration")
     public MessageDto register(@RequestBody RegisterRequest request) {
         return userService.register(request);
     }
 
-    @PostMapping("/authenticate")
+    @PostMapping("/authentication")
     public MessageDto authenticate(@RequestBody AuthenticationRequest request) {
         return userService.authenticate(request);
     }

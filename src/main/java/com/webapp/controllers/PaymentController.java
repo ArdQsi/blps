@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 public class PaymentController {
     private final CardService cardService;
 
-    @PostMapping("/pay")
+    @PostMapping("/cards")
     public MessageDto saveCard(@RequestBody CardDto cardDto){
         return cardService.saveCard(cardDto);
     }

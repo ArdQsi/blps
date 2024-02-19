@@ -1,9 +1,6 @@
 package com.webapp.controllers;
 
-import com.webapp.dto.FilmDto;
-import com.webapp.dto.FilmUserDto;
-import com.webapp.dto.GenreDto;
-import com.webapp.dto.MessageDto;
+import com.webapp.dto.*;
 import com.webapp.model.FilmEntity;
 import com.webapp.service.FilmService;
 import lombok.RequiredArgsConstructor;
@@ -18,23 +15,23 @@ import java.util.List;
 public class FilmController {
 
     private final FilmService filmService;
-    @GetMapping("/all")
+    @GetMapping("/movies")
     public List<FilmEntity> findAllFilm(){
         return filmService.getAllFilm();
     }
 
-    @PostMapping("/video")
-    public String findFilm(@RequestBody FilmUserDto data){
-        return filmService.getFilm(data.getFilmId(), data.getUserId());
+    @PostMapping("/video/{token}")
+    public MessageDto getFilm(@PathVariable String token, @RequestBody RequestVideoDto requestVideoDto){
+        return filmService.getFilm(token, requestVideoDto.getUserId());
     }
 
-    @PostMapping("/addfilm")
+    @PostMapping("/movies")
     public MessageDto addFilm(@RequestBody FilmDto filmDto) {
         return filmService.addFilm(filmDto);
     }
 
-    @PostMapping("/addgenre")
-    public MessageDto addFilm(@RequestBody GenreDto genreDto) {
+    @PostMapping("/genres")
+    public MessageDto addGenre(@RequestBody GenreDto genreDto) {
         return filmService.addGenre(genreDto);
     }
 
