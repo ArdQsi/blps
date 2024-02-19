@@ -19,8 +19,8 @@ public class AuthenticationController {
 
     private final UserService userService;
     @PostMapping("/register")
-    public ResponseEntity<UserEntity> register(@RequestBody RegisterRequest request) {
-        return ResponseEntity.ok(userService.register(request));
+    public UserEntity register(@RequestBody RegisterRequest request) {
+        return userService.register(request);
     }
 
     @PostMapping("/authenticate")

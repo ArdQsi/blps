@@ -3,12 +3,12 @@ package com.webapp.service;
 import com.webapp.auth.AuthenticationRequest;
 import com.webapp.auth.RegisterRequest;
 import com.webapp.exceptioin.NotFoundException;
+import com.webapp.exceptioin.UserExistException;
 import com.webapp.model.FilmEntity;
 import com.webapp.model.UserEntity;
 import com.webapp.repository.FilmRepository;
 import com.webapp.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
@@ -33,7 +33,6 @@ public class UserService {
     }
 
     public UserEntity register(RegisterRequest registerRequest){
-        System.out.println(registerRequest.getEmail());
         UserEntity userEntity = userRepository.findUserByEmail(registerRequest.getEmail());
         if (userEntity == null) {
             UserEntity newUser = new UserEntity();
@@ -42,8 +41,10 @@ public class UserService {
             newUser.setEmail(registerRequest.getEmail());
             newUser.setPassword(registerRequest.getPassword());
             userRepository.save(newUser);
+            return newUser;
+        } else {
+            throw new UserExistException("User already exist");
         }
-        return null;
     }
 
     public UserEntity authenticate(AuthenticationRequest authenticationRequest){
