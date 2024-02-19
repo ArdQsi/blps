@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -64,15 +65,23 @@ public class FilmService {
             throw new ResourceAlreadyExistsException("This movie already exists");
         }
         FilmEntity newFilmEntity = new FilmEntity();
-        GenreEntity genreEntity = genreRepository.findByName(filmDto.getGenre());
+        GenreEntity genreEntity = new GenreEntity();
+        Set<String> genreNames = filmDto.getGenreNames();
+
+        for(String genreName : genreNames){
+            genreEntity = genreRepository.findByName(genreName);
+            if (genreEntity==null) {
+                throw new ResourceNotFoundException("Genre not found");
+            }
+            newFilmEntity.getGenres().add(genreEntity);
+            genreEntity.getFilms().add(newFilmEntity);
+        }
+
         newFilmEntity.setName(filmDto.getName());
         newFilmEntity.setYear(filmDto.getYear());
         newFilmEntity.setSubscription(filmDto.getSubscription());
         newFilmEntity.setDescription(filmDto.getDescription());
         newFilmEntity.setToken(filmDto.getToken());
-
-        newFilmEntity.getGenres().add(genreEntity);
-        genreEntity.getFilms().add(newFilmEntity);
 
         filmRepository.save(newFilmEntity);
         genreRepository.save(genreEntity);
