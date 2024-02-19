@@ -1,11 +1,9 @@
 package com.webapp.repository;
 
 import java.util.*;
-
-import com.webapp.dto.FilmDto;
 import com.webapp.model.FilmEntity;
-import com.webapp.model.GenreEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 @Repository

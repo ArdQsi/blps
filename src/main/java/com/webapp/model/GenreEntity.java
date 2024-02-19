@@ -1,5 +1,6 @@
 package com.webapp.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -17,7 +18,7 @@ public class GenreEntity {
     private Long id;
 
     private String name;
-    @ManyToMany(mappedBy = "genres")
+    @JsonBackReference
+    @ManyToMany(mappedBy = "genres", fetch = FetchType.LAZY)
     private Set<FilmEntity> films = new HashSet<FilmEntity>();
-
 }

@@ -1,5 +1,6 @@
 package com.webapp.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Pattern;
@@ -36,15 +37,10 @@ public class UserEntity {
     private Role role;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
-    private List<CardEntity> cards;
+    private Set<CardEntity> cards = new HashSet<CardEntity>();
 
-    @ManyToMany
-    @JoinTable(
-            name = "user_history",
-            joinColumns = @JoinColumn(name="user_id"),
-            inverseJoinColumns = @JoinColumn(name="film_id")
-    )
+    @JsonBackReference
+    @ManyToMany(mappedBy = "filmUser", fetch = FetchType.LAZY)
     private Set<FilmEntity> userFilm = new HashSet<FilmEntity>();
-
 }
 

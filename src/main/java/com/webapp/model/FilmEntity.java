@@ -1,5 +1,7 @@
 package com.webapp.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -21,19 +23,21 @@ public class FilmEntity {
     private boolean subscription;
     private String token;
 
-    @ManyToMany
+    @JsonManagedReference
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "film_genre",
-            joinColumns = @JoinColumn(name="film_id"),
-            inverseJoinColumns = @JoinColumn(name = "genre_id")
+            joinColumns = @JoinColumn(name="film_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "genre_id", referencedColumnName = "id")
     )
     private Set<GenreEntity> genres = new HashSet<GenreEntity>();
 
-    @ManyToMany
+    @JsonIgnore
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "user_history",
-            joinColumns = @JoinColumn(name="film_id"),
-            inverseJoinColumns = @JoinColumn(name="user_id")
+            joinColumns = @JoinColumn(name="film_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name="user_id", referencedColumnName = "id")
     )
     private Set<UserEntity> filmUser = new HashSet<UserEntity>();
 
