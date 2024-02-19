@@ -1,6 +1,6 @@
-package com.webapp.exceptioin;
+package com.webapp.dto;
 
-public class AppError {
+public class MessageErrorDto {
     private int statusCode;
     private String message;
 
@@ -20,10 +20,10 @@ public class AppError {
         this.message = message;
     }
 
-    public AppError() {
+    public MessageErrorDto() {
     }
 
-    public AppError(int statusCode, String message) {
+    public MessageErrorDto(int statusCode, String message) {
         this.statusCode = statusCode;
         this.message = message;
     }

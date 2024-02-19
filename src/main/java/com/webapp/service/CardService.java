@@ -2,6 +2,7 @@ package com.webapp.service;
 
 import com.webapp.dto.CardDto;
 import com.webapp.dto.MessageDto;
+import com.webapp.exceptioin.ResourceAlreadyExistsException;
 import com.webapp.exceptioin.ResourceNotFoundException;
 import com.webapp.model.CardEntity;
 import com.webapp.model.UserEntity;
