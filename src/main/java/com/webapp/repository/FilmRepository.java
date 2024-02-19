@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface FilmRepository extends JpaRepository<FilmEntity, Long> {
-    List<FilmEntity> findFilmByName(String name);
+    FilmEntity findFilmByName(String name);
 
     FilmEntity findFilmById(Long id);
 

@@ -1,20 +1,16 @@
 package com.webapp.service;
 
 import com.webapp.dto.CardDto;
-import com.webapp.exceptioin.NotFoundException;
+import com.webapp.exceptioin.ResourceNotFoundException;
 import com.webapp.model.CardEntity;
 import com.webapp.model.UserEntity;
 import com.webapp.repository.CardRepository;
 import com.webapp.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -26,13 +22,13 @@ public class CardService {
     public void saveCard(CardDto cardDto){
 
         if(!checkCard(cardDto)){
-            throw new NotFoundException("Incorrect card data");
+            throw new ResourceNotFoundException("Incorrect card data");
         }
 
         UserEntity userEntity = userRepository.findUserById(cardDto.getUserId());
 
         if(userEntity==null){
-            throw new NotFoundException("Incorrect user id");
+            throw new ResourceNotFoundException("Incorrect user id");
         }
 
         CardEntity card = new CardEntity();

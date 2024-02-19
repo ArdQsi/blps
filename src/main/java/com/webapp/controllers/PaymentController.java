@@ -1,7 +1,7 @@
 package com.webapp.controllers;
 
 import com.webapp.dto.CardDto;
-import com.webapp.exceptioin.NotFoundException;
+import com.webapp.exceptioin.ResourceNotFoundException;
 import com.webapp.service.CardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +18,7 @@ public class PaymentController {
         try{
             cardService.saveCard(cardDto);
         }
-        catch (NotFoundException e){
+        catch (ResourceNotFoundException e){
             System.out.println(e);
             return ResponseEntity.badRequest().build();
         }
