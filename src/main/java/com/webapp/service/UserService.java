@@ -6,6 +6,7 @@ import com.webapp.dto.MessageDto;
 import com.webapp.exceptioin.ResourceNotFoundException;
 import com.webapp.exceptioin.ResourceAlreadyExistsException;
 import com.webapp.model.FilmEntity;
+import com.webapp.model.Role;
 import com.webapp.model.UserEntity;
 import com.webapp.repository.FilmRepository;
 import com.webapp.repository.UserRepository;
@@ -41,6 +42,7 @@ public class UserService {
             newUser.setLastname(registerRequest.getLastname());
             newUser.setEmail(registerRequest.getEmail());
             newUser.setPassword(registerRequest.getPassword());
+            newUser.setRole(Role.USER);
             userRepository.save(newUser);
             return new MessageDto("Successfully registered");
         } else {
@@ -72,4 +74,21 @@ public class UserService {
         userRepository.save(user);
     }
 
+    public MessageDto addModerator(Long id){
+        UserEntity userEntity = userRepository.findUserById(id);
+        if (userEntity == null)
+            throw new ResourceNotFoundException("This user does not exist");
+        userEntity.setRole(Role.MODERATOR);
+        userRepository.save(userEntity);
+        return new MessageDto("Moderator added successfully");
+    }
+
+    public MessageDto removeModerator(Long id){
+        UserEntity userEntity = userRepository.findUserById(id);
+        if (userEntity == null)
+            throw new ResourceNotFoundException("This user does not exist");
+        userEntity.setRole(Role.USER);
+        userRepository.save(userEntity);
+        return new MessageDto("Moderator successfully removed");
+    }
 }

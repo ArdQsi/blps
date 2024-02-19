@@ -6,6 +6,7 @@ import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
 
 import java.sql.Timestamp;
 import java.util.Date;
@@ -31,6 +32,8 @@ public class UserEntity {
     @Temporal(TemporalType.TIMESTAMP)
     private Timestamp subscriptionEndDate;
     private String password;
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     private List<CardEntity> cards;
