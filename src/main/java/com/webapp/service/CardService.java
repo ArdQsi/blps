@@ -1,6 +1,7 @@
 package com.webapp.service;
 
 import com.webapp.dto.CardDto;
+import com.webapp.dto.MessageDto;
 import com.webapp.exceptioin.NotFoundException;
 import com.webapp.model.CardEntity;
 import com.webapp.model.UserEntity;
@@ -23,7 +24,7 @@ public class CardService {
     private final UserRepository userRepository;
     private final UserService userService;
 
-    public void saveCard(CardDto cardDto){
+    public MessageDto saveCard(CardDto cardDto){
 
         if(!checkCard(cardDto)){
             throw new NotFoundException("Incorrect card data");
@@ -45,6 +46,7 @@ public class CardService {
 
         cardRepository.save(card);
         userService.updateSubscriptionEndDate(cardDto.getUserId());
+        return new MessageDto("Payment was successful");
     }
 
     private boolean checkCard(CardDto cardDto){
