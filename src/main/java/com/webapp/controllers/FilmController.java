@@ -31,8 +31,8 @@ public class FilmController {
     }
 
     @PostMapping("/movies")
-    public MessageDto addFilm(@RequestBody FilmDto filmDto) {
-        return filmService.addFilm(filmDto);
+    public MessageDto addFilm(@RequestBody RequestFilmAddDto requestFilmAddDto) {
+        return filmService.addFilm(requestFilmAddDto);
     }
 
     @PostMapping("/genres")

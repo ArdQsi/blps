@@ -3,6 +3,7 @@ package com.webapp.service;
 import com.webapp.dto.FilmDto;
 import com.webapp.dto.GenreDto;
 import com.webapp.dto.MessageDto;
+import com.webapp.dto.RequestFilmAddDto;
 import com.webapp.exceptioin.ResourceAlreadyExistsException;
 import com.webapp.exceptioin.ResourceNotAllowedException;
 import com.webapp.exceptioin.ResourceNotFoundException;
@@ -14,6 +15,8 @@ import com.webapp.repository.FilmRepository;
 import com.webapp.repository.GenreRepository;
 import com.webapp.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.tomcat.util.security.MD5Encoder;
 import org.springframework.stereotype.Service;
 
 
@@ -21,6 +24,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -87,8 +91,8 @@ public class FilmService {
         return filmRepository.findFilmByName(name);
     }
 
-    public MessageDto addFilm(FilmDto filmDto) {
-        FilmEntity filmEntity = filmRepository.findFilmByToken(filmDto.getToken());
+    public MessageDto addFilm(RequestFilmAddDto filmDto) {
+        FilmEntity filmEntity = filmRepository.findFilmByName(filmDto.getName());
 
         if (filmEntity != null) {
             throw new ResourceAlreadyExistsException("This movie already exists");
@@ -111,7 +115,7 @@ public class FilmService {
         newFilmEntity.setYear(filmDto.getYear());
         newFilmEntity.setSubscription(filmDto.getSubscription());
         newFilmEntity.setDescription(filmDto.getDescription());
-        newFilmEntity.setToken(filmDto.getToken());
+        newFilmEntity.setToken(DigestUtils.md5Hex(filmDto.toString()));
 
         filmRepository.save(newFilmEntity);
         genreRepository.save(genreEntity);
