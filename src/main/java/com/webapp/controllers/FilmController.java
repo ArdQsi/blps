@@ -25,6 +25,11 @@ public class FilmController {
         return filmService.getFilm(token, requestVideoDto.getUserId());
     }
 
+    @DeleteMapping("/video/{token}")
+    public MessageDto deleteFilm(@PathVariable String token){
+        return filmService.deleteFilm(token);
+    }
+
     @PostMapping("/movies")
     public MessageDto addFilm(@RequestBody FilmDto filmDto) {
         return filmService.addFilm(filmDto);

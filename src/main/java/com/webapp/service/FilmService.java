@@ -33,6 +33,23 @@ public class FilmService {
         return filmRepository.findAll();
     }
 
+//    public MessageDto updateFilm(FilmDto filmDto){
+//        FilmEntity filmEntity = filmRepository.findFilmByToken(filmDto.getToken());
+//        if(filmEntity ==null){
+//            throw new ResourceNotFoundException("Film not found");
+//        }
+//
+//    }
+
+    public MessageDto deleteFilm(String token){
+        FilmEntity filmEntity = filmRepository.findFilmByToken(token);
+        if(filmEntity ==null){
+            throw new ResourceNotFoundException("Movie not found");
+        }
+        filmRepository.deleteAllByToken(token);
+        return new MessageDto("Movie was deleted");
+    }
+
     public MessageDto getFilm(String token, Long userId) {
         FilmEntity film = filmRepository.findFilmByToken(token);
         UserEntity user = userRepository.findUserById(userId);
