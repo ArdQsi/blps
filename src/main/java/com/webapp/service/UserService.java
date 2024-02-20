@@ -3,6 +3,7 @@ package com.webapp.service;
 import com.webapp.auth.AuthenticationRequest;
 import com.webapp.auth.RegisterRequest;
 import com.webapp.dto.MessageDto;
+import com.webapp.exceptioin.ResourceNotAllowedException;
 import com.webapp.exceptioin.ResourceNotFoundException;
 import com.webapp.exceptioin.ResourceAlreadyExistsException;
 import com.webapp.model.FilmEntity;
@@ -78,6 +79,9 @@ public class UserService {
         UserEntity userEntity = userRepository.findUserById(id);
         if (userEntity == null)
             throw new ResourceNotFoundException("This user does not exist");
+        if (userEntity.getRole() == Role.MODERATOR) {
+            throw new ResourceNotAllowedException("The user already has the user moderator");
+        }
         userEntity.setRole(Role.MODERATOR);
         userRepository.save(userEntity);
         return new MessageDto("Moderator added successfully");
@@ -87,6 +91,9 @@ public class UserService {
         UserEntity userEntity = userRepository.findUserById(id);
         if (userEntity == null)
             throw new ResourceNotFoundException("This user does not exist");
+        if (userEntity.getRole() == Role.USER) {
+            throw new ResourceNotAllowedException("The user already has the user role");
+        }
         userEntity.setRole(Role.USER);
         userRepository.save(userEntity);
         return new MessageDto("Moderator successfully removed");
