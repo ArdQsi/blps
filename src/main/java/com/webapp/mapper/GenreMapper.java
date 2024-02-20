@@ -10,5 +10,10 @@ public interface GenreMapper {
 
     GenreMapper MAPPER = Mappers.getMapper(GenreMapper.class);
 
-    GenreDto toDTO(GenreEntity genre);
+    default String toDTO(GenreEntity genre){
+        if (genre == null) {
+            return null;
+        }
+        return genre.toString();
+    }
 }

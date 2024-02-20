@@ -13,5 +13,5 @@ public class FilmDto {
     private String description;
     private Boolean subscription;
     private String token;
-    private Set<String> genreNames;
+    private Set<String> genres;
 }

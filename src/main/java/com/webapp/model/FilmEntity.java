@@ -20,10 +20,10 @@ public class FilmEntity {
     private String name;
     private String year;
     private String description;
-    private boolean subscription;
+    private Boolean subscription;
     private String token;
 
-    @JsonManagedReference
+    //@JsonManagedReference
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "film_genre",
@@ -32,7 +32,7 @@ public class FilmEntity {
     )
     private Set<GenreEntity> genres = new HashSet<GenreEntity>();
 
-    @JsonIgnore
+    //@JsonIgnore
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "user_history",
@@ -40,9 +40,5 @@ public class FilmEntity {
             inverseJoinColumns = @JoinColumn(name="user_id", referencedColumnName = "id")
     )
     private Set<UserEntity> filmUser = new HashSet<UserEntity>();
-
-    public boolean hasSubscription(){
-        return subscription;
-    }
 
 }

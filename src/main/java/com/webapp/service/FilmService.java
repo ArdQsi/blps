@@ -6,6 +6,7 @@ import com.webapp.dto.MessageDto;
 import com.webapp.exceptioin.ResourceAlreadyExistsException;
 import com.webapp.exceptioin.ResourceNotAllowedException;
 import com.webapp.exceptioin.ResourceNotFoundException;
+import com.webapp.mapper.FIlmMapper;
 import com.webapp.model.FilmEntity;
 import com.webapp.model.GenreEntity;
 import com.webapp.model.UserEntity;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -29,13 +31,18 @@ public class FilmService {
     private final GenreRepository genreRepository;
     private final UserService userService;
 
-    public List<FilmEntity> getAllFilm() {
-        return filmRepository.findAll();
+    public List<FilmDto> getAllFilm() {
+        List<FilmDto> filmDtos = new ArrayList<>();
+        List<FilmEntity> filmEntities = filmRepository.findAll();
+        for(FilmEntity film : filmEntities){
+            filmDtos.add(FIlmMapper.MAPPER.toDTO(film));
+        }
+        return filmDtos;
     }
 
 //    public MessageDto updateFilm(FilmDto filmDto){
 //        FilmEntity filmEntity = filmRepository.findFilmByToken(filmDto.getToken());
-//        if(filmEntity ==null){
+//        if(filmEntity == null){
 //            throw new ResourceNotFoundException("Film not found");
 //        }
 //
@@ -43,9 +50,11 @@ public class FilmService {
 
     public MessageDto deleteFilm(String token){
         FilmEntity filmEntity = filmRepository.findFilmByToken(token);
+
         if(filmEntity ==null){
             throw new ResourceNotFoundException("Movie not found");
         }
+
         filmRepository.deleteAllByToken(token);
         return new MessageDto("Movie was deleted");
     }
@@ -58,7 +67,7 @@ public class FilmService {
         if (film == null) {
             throw new ResourceNotFoundException("The movie doesn't exist");
         }
-        if (film.hasSubscription()){
+        if (film.getSubscription()){
             if(user.getSubscriptionEndDate() != null && user.getSubscriptionEndDate().after(new Timestamp(System.currentTimeMillis()))) {
                 userService.addFilmToHistory(film.getId(), userId);
                 return new MessageDto("Watching a movie");
@@ -79,16 +88,18 @@ public class FilmService {
     }
 
     public MessageDto addFilm(FilmDto filmDto) {
-        FilmEntity filmEntity = filmRepository.findFilmByName(filmDto.getName());
+        FilmEntity filmEntity = filmRepository.findFilmByToken(filmDto.getToken());
+
         if (filmEntity != null) {
             throw new ResourceAlreadyExistsException("This movie already exists");
         }
+
         FilmEntity newFilmEntity = new FilmEntity();
         GenreEntity genreEntity = new GenreEntity();
-        Set<String> genreNames = filmDto.getGenreNames();
+        Set<String> genreDtos = filmDto.getGenres();
 
-        for(String genreName : genreNames){
-            genreEntity = genreRepository.findByName(genreName);
+        for(String genre : genreDtos){
+            genreEntity = genreRepository.findByName(genre);
             if (genreEntity==null) {
                 throw new ResourceNotFoundException("Genre not found");
             }
@@ -109,6 +120,7 @@ public class FilmService {
 
     public MessageDto addGenre(GenreDto genreDto) {
         GenreEntity genreEntity = genreRepository.findByName(genreDto.getName());
+
         if (genreEntity != null) {
             throw new ResourceAlreadyExistsException("This genre already exists");
         }

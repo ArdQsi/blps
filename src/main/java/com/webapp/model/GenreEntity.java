@@ -18,7 +18,12 @@ public class GenreEntity {
     private Long id;
 
     private String name;
-    @JsonBackReference
+    //@JsonBackReference
     @ManyToMany(mappedBy = "genres", fetch = FetchType.LAZY)
     private Set<FilmEntity> films = new HashSet<FilmEntity>();
+
+    @Override
+    public String toString() {
+        return name;
+    }
 }

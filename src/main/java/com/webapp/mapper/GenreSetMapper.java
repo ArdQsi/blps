@@ -12,5 +12,5 @@ public interface GenreSetMapper {
 
     GenreSetMapper MAPPER = Mappers.getMapper(GenreSetMapper.class);
 
-    Set<GenreDto> toDTOSet(Set<GenreEntity> models);
+    Set<String> toDTOSet(Set<GenreEntity> genres);
 }

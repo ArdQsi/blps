@@ -16,7 +16,7 @@ public class FilmController {
 
     private final FilmService filmService;
     @GetMapping("/movies")
-    public List<FilmEntity> findAllFilm(){
+    public List<FilmDto> findAllFilm(){
         return filmService.getAllFilm();
     }
 

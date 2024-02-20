@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.*;
 public class AdminController {
     private final UserService userService;
 
-    @PostMapping("/moderators")
-    public MessageDto addModerator(@RequestParam Long id) {
+    @PostMapping("/moderators/{id}")
+    public MessageDto addModerator(@PathVariable Long id) {
         return userService.addModerator(id);
     }
 

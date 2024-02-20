@@ -39,7 +39,7 @@ public class UserEntity {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     private Set<CardEntity> cards = new HashSet<CardEntity>();
 
-    @JsonBackReference
+    //@JsonBackReference
     @ManyToMany(mappedBy = "filmUser", fetch = FetchType.LAZY)
     private Set<FilmEntity> userFilm = new HashSet<FilmEntity>();
 }

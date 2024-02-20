@@ -7,7 +7,7 @@ import com.webapp.model.GenreEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
-@Mapper(uses = GenreSetMapper.class)
+@Mapper(uses = {GenreSetMapper.class, GenreMapper.class})
 public interface FIlmMapper {
     FIlmMapper MAPPER = Mappers.getMapper(FIlmMapper.class);
 
