@@ -1,7 +1,7 @@
 package com.webapp.controllers;
 
 import com.webapp.dto.MessageDto;
-import com.webapp.dto.RequestVideoDto;
+import com.webapp.dto.UserIdDto;
 import com.webapp.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -13,7 +13,7 @@ public class AdminController {
     private final UserService userService;
 
     @PostMapping("/moderators")
-    public MessageDto addModerator(@RequestBody RequestVideoDto requestVideoDto) {
+    public MessageDto addModerator(@RequestBody UserIdDto requestVideoDto) {
         return userService.addModerator(requestVideoDto.getUserId());
     }
 

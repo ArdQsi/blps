@@ -14,4 +14,5 @@ public class CardDto {
     private String name;
     private String surname;
     private Integer cvc;
+    private Long amount;
 }

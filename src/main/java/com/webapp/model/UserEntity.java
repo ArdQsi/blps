@@ -28,6 +28,7 @@ public class UserEntity {
     private Long id;
     private String firstname;
     private String lastname;
+    private Long balance = 0L;
     @Email
     private String email;
     @Temporal(TemporalType.TIMESTAMP)

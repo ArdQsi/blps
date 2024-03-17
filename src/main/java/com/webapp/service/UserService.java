@@ -1,5 +1,7 @@
 package com.webapp.service;
 
+import bitronix.tm.BitronixTransactionManager;
+import bitronix.tm.TransactionManagerServices;
 import com.webapp.auth.AuthenticationRequest;
 import com.webapp.auth.RegisterRequest;
 import com.webapp.dto.MessageDto;
@@ -13,7 +15,15 @@ import com.webapp.repository.FilmRepository;
 import com.webapp.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.TransactionDefinition;
+import org.springframework.transaction.TransactionException;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.support.DefaultTransactionDefinition;
 
+
+import javax.transaction.SystemException;
 import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.Objects;
@@ -24,6 +34,31 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final FilmRepository filmRepository;
+
+    @Transactional
+    public MessageDto updateSubscription(Long userId) {
+
+            // Выполнение вашей логики, работающей в пределах транзакции
+            UserEntity user = userRepository.findUserById(userId);
+
+            if (user.getBalance() <= 0) {
+                throw new ResourceNotFoundException("Balance is empty!");
+            }
+            if (user.getBalance() <= 300) {
+                throw new ResourceNotFoundException("Lack of founds to pay!");
+            }
+
+            user.setBalance(user.getBalance() - 300);
+            userRepository.save(user);
+            updateSubscriptionEndDate(user.getId());
+            return new MessageDto("Subscription extended");
+    }
+
+
+    public void updateBalance(UserEntity user, Long balance){
+        user.setBalance(balance);
+        userRepository.save(user);
+    }
 
     public void addFilmToHistory(Long filmId, Long userId) {
         UserEntity user = userRepository.findUserById(userId);

@@ -3,6 +3,6 @@ package com.webapp.dto;
 import lombok.Data;
 
 @Data
-public class RequestVideoDto {
+public class UserIdDto {
     Long userId;
 }

@@ -27,6 +27,10 @@ public class CardService {
             throw new ResourceNotFoundException("Incorrect card data");
         }
 
+        if(cardDto.getAmount()<0){
+            throw new ResourceNotFoundException("Incorrect amount of money");
+        }
+
         UserEntity userEntity = userRepository.findUserById(cardDto.getUserId());
 
         if(userEntity==null){
@@ -42,7 +46,8 @@ public class CardService {
         card.setUser(userEntity);
 
         cardRepository.save(card);
-        userService.updateSubscriptionEndDate(cardDto.getUserId());
+        userService.updateBalance(userEntity, cardDto.getAmount());
+        //userService.updateSubscriptionEndDate(cardDto.getUserId());
         return new MessageDto("Payment was successful");
     }
 

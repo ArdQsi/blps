@@ -122,16 +122,4 @@ public class FilmService {
         return new MessageDto("Movie added successfully");
     }
 
-    public MessageDto addGenre(GenreDto genreDto) {
-        GenreEntity genreEntity = genreRepository.findByName(genreDto.getName());
-
-        if (genreEntity != null) {
-            throw new ResourceAlreadyExistsException("This genre already exists");
-        }
-        GenreEntity newGenreEntity = new GenreEntity();
-        newGenreEntity.setName(genreDto.getName());
-
-        genreRepository.save(newGenreEntity);
-        return new MessageDto("Genre added successfully");
-    }
 }
