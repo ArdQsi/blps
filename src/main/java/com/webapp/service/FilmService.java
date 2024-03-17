@@ -36,6 +36,7 @@ public class FilmService {
     private final UserService userService;
 
     public List<FilmDto> getAllFilm() {
+        System.out.println("get FILMSSSS");
         List<FilmDto> filmDtos = new ArrayList<>();
         List<FilmEntity> filmEntities = filmRepository.findAll();
         for(FilmEntity film : filmEntities){

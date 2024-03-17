@@ -1,7 +1,6 @@
 package com.webapp.controllers;
 
 import com.webapp.dto.*;
-import com.webapp.model.FilmEntity;
 import com.webapp.service.FilmService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;

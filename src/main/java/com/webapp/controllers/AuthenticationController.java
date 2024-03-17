@@ -2,9 +2,11 @@ package com.webapp.controllers;
 
 import com.webapp.auth.AuthenticationRequest;
 import com.webapp.auth.RegisterRequest;
+import com.webapp.dto.AuthenticationResponseDto;
 import com.webapp.dto.MessageDto;
 import com.webapp.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,13 +19,13 @@ public class AuthenticationController {
 
     private final UserService userService;
     @PostMapping("/registration")
-    public MessageDto register(@RequestBody RegisterRequest request) {
-        return userService.register(request);
+    public ResponseEntity<AuthenticationResponseDto> register(@RequestBody RegisterRequest request) {
+        return ResponseEntity.ok(userService.register(request));
     }
 
     @PostMapping("/authentication")
-    public MessageDto authenticate(@RequestBody AuthenticationRequest request) {
-        return userService.authenticate(request);
+    public ResponseEntity<AuthenticationResponseDto> authenticate(@RequestBody AuthenticationRequest request) {
+        return ResponseEntity.ok(userService.authenticate(request));
     }
 }
 
