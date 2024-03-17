@@ -24,7 +24,7 @@ public class FilmEntity {
     private String token;
 
     //@JsonManagedReference
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "film_genre",
             joinColumns = @JoinColumn(name="film_id", referencedColumnName = "id"),
@@ -33,7 +33,7 @@ public class FilmEntity {
     private Set<GenreEntity> genres = new HashSet<GenreEntity>();
 
     //@JsonIgnore
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "user_history",
             joinColumns = @JoinColumn(name="film_id", referencedColumnName = "id"),
