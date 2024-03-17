@@ -5,7 +5,6 @@ import com.webapp.model.Users;
 import com.webapp.service.XMLService;
 
 import java.util.List;
-import java.util.Objects;
 
 
 public class UserRepositoryImpl implements UserXmlRepository {
@@ -37,7 +36,6 @@ public class UserRepositoryImpl implements UserXmlRepository {
 
 
     public void save(UserEntity user) {
-        System.out.println(path);
         Users users = (Users) xmlService.getEntity(Users.class, "users", xmlPath);
         if (users==null) users = new Users();
         boolean userExist = false;
