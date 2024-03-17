@@ -2,6 +2,7 @@ package com.webapp.controllers;
 
 import com.webapp.dto.*;
 import com.webapp.service.FilmService;
+import com.webapp.service.GenreService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,14 +15,15 @@ import java.util.List;
 public class FilmController {
 
     private final FilmService filmService;
+    private final GenreService genreService;
     @GetMapping("/movies")
     public List<FilmDto> findAllFilm(){
         return filmService.getAllFilm();
     }
 
     @PostMapping("/video/{token}")
-    public MessageDto getFilm(@PathVariable String token, @RequestBody RequestVideoDto requestVideoDto){
-        return filmService.getFilm(token, requestVideoDto.getUserId());
+    public MessageDto getFilm(@PathVariable String token, @RequestBody UserIdDto userIdDto){
+        return filmService.getFilm(token, userIdDto.getUserId());
     }
 
     @DeleteMapping("/video/{token}")
@@ -36,7 +38,7 @@ public class FilmController {
 
     @PostMapping("/genres")
     public MessageDto addGenre(@RequestBody GenreDto genreDto) {
-        return filmService.addGenre(genreDto);
+        return genreService.addGenre(genreDto);
     }
 
 }

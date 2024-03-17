@@ -1,5 +1,7 @@
 package com.webapp.service;
 
+import bitronix.tm.BitronixTransactionManager;
+import bitronix.tm.TransactionManagerServices;
 import com.webapp.auth.AuthenticationRequest;
 import com.webapp.auth.RegisterRequest;
 import com.webapp.dto.AuthenticationResponseDto;
@@ -14,11 +16,22 @@ import com.webapp.repository.FilmRepository;
 import com.webapp.repository.UserRepository;
 import com.webapp.repository.UserXmlRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.TransactionDefinition;
+import org.springframework.transaction.TransactionException;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.support.DefaultTransactionDefinition;
 
+
+import javax.transaction.RollbackException;
+import javax.transaction.SystemException;
 import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.Objects;
@@ -28,12 +41,48 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class UserService {
 
+    @Value("${SUBSCRIPTION_PRICE}")
+    private int price;
     private final UserRepository userRepository;
     private final UserXmlRepository userXmlRepository;
     private final FilmRepository filmRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
+    private final BitronixTransactionManager bitronixTransactionManager;
+
+    public MessageDto updateSubscription(Long userId) {
+        try {
+            bitronixTransactionManager.begin();
+            UserEntity user = userRepository.findUserById(userId);
+
+            if (user.getBalance() <= 0) {
+                throw new ResourceNotFoundException("Balance is empty!");
+            }
+            if (user.getBalance() <= price) {
+                throw new ResourceNotFoundException("Lack of founds to pay!");
+            }
+
+            user.setBalance(user.getBalance() - price);
+            userRepository.save(user);
+            updateSubscriptionEndDate(user.getId());
+            bitronixTransactionManager.commit();
+            return new MessageDto("Subscription extended");
+        } catch (Exception e) {
+            try {
+                bitronixTransactionManager.rollback();
+            } catch (SystemException ex) {
+                ex.printStackTrace();
+            }
+            return new MessageDto("Transaction error!");
+        }
+
+    }
+
+    public void updateBalance(UserEntity user, Long balance) {
+        user.setBalance(balance);
+        userRepository.save(user);
+    }
 
     public void addFilmToHistory(Long filmId, Long userId) {
         UserEntity user = userRepository.findUserById(userId);

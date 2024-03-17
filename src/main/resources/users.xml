@@ -1,80 +1,11 @@
 <users>
   <user>
-    <id>4</id>
+    <id>1</id>
     <firstname>lol</firstname>
     <lastname>KEK</lastname>
-    <email>lo1l@gmail.com</email>
-    <password>$2a$10$Bl5V.Ll0Jx0jHAPp9oyzTerbkv0j0LScnfli.Y1RHYCRVAnhSGkW2</password>
-    <role>ROLE_USER</role>
-    <cards>
-      <com.webapp.model.CardEntity>
-        <month>0</month>
-        <year>0</year>
-      </com.webapp.model.CardEntity>
-    </cards>
-    <userFilm>
-      <com.webapp.model.FilmEntity>
-        <genres/>
-        <filmUser/>
-      </com.webapp.model.FilmEntity>
-    </userFilm>
-  </user>
-  <user>
-    <id>5</id>
-    <firstname>lol</firstname>
-    <lastname>KEK</lastname>
-    <email>lo1l123@gmail.com</email>
-    <password>$2a$10$bsUA0Iy1EcS.JTrUHeBVBexQa9/qSJQ0v7n5GItKKrCdNHHAssELq</password>
-    <role>ROLE_MODERATOR</role>
-    <cards>
-      <com.webapp.model.CardEntity>
-        <month>0</month>
-        <year>0</year>
-      </com.webapp.model.CardEntity>
-    </cards>
-    <userFilm>
-      <com.webapp.model.FilmEntity>
-        <genres/>
-        <filmUser/>
-      </com.webapp.model.FilmEntity>
-    </userFilm>
-  </user>
-  <user>
-    <id>6</id>
-    <firstname>lol</firstname>
-    <lastname>KEK</lastname>
-    <email>lo1l113223@gmail.com</email>
-    <password>$2a$10$8v2ecn21xL7/DTmcEclIj.NYiL6YB4e7Nfi7DpzisNr65bzTzclhO</password>
-    <role>ROLE_USER</role>
-    <cards>
-      <com.webapp.model.CardEntity>
-        <month>0</month>
-        <year>0</year>
-      </com.webapp.model.CardEntity>
-    </cards>
-    <userFilm>
-      <com.webapp.model.FilmEntity>
-        <genres/>
-        <filmUser/>
-      </com.webapp.model.FilmEntity>
-    </userFilm>
-  </user>
-  <user>
-    <id>7</id>
-    <firstname>lol</firstname>
-    <lastname>KEK</lastname>
-    <email>lo1l1113223@gmail.com</email>
-    <password>$2a$10$gVkiFJs08XQr646YmLG5N.siJs2ZN7bNfg7Cgsts/T79SFi70PrS2</password>
-    <role>ROLE_USER</role>
-    <cards/>
-    <userFilm/>
-  </user>
-  <user>
-    <id>8</id>
-    <firstname>lol</firstname>
-    <lastname>KEK</lastname>
-    <email>lo1l11131223@gmail.com</email>
-    <password>$2a$10$BQIvuEQKYYhId1jFDS7K9OOtwnVYaXHb7EmL7UsOCDgYX5v6.1yYK</password>
+    <balance>0</balance>
+    <email>lo1l71131223@gmail.com</email>
+    <password>$2a$10$ZNB2MnmOuXPbY9XnpdcyWOgFyQ5RNsUdJJ9eVEmbHPZWm9g8d5mVa</password>
     <role>ROLE_USER</role>
   </user>
 </users>

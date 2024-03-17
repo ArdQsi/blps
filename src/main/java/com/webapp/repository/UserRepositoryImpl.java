@@ -9,7 +9,7 @@ import java.util.List;
 
 public class UserRepositoryImpl implements UserXmlRepository {
     private final XMLService xmlService;
-    private final String xmlPath = "";//Указать свой путь
+    private final String xmlPath = "C:\\Users\\denvv\\OneDrive\\Desktop\\6 сем\\БЛПС\\blps\\src\\main\\resources\\users.xml";//Указать свой путь
     public UserRepositoryImpl(XMLService xmlService) {
         this.xmlService = xmlService;
     }
