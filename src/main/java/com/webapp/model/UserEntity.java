@@ -31,7 +31,7 @@ public class UserEntity implements UserDetails {
     private Long id;
     private String firstname;
     private String lastname;
-    private Long balance = 0L;
+    private long balance = 0;
     @Email
     private String email;
     @Temporal(TemporalType.TIMESTAMP)
