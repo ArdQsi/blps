@@ -47,7 +47,6 @@ public class CardService {
 
         cardRepository.save(card);
         userService.updateBalance(userEntity, cardDto.getAmount());
-        //userService.updateSubscriptionEndDate(cardDto.getUserId());
         return new MessageDto("Payment was successful");
     }
 

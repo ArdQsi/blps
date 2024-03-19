@@ -24,6 +24,7 @@ public class SecurityConfiguration {
         http
                 .csrf().disable()
                 .authorizeHttpRequests()
+                .requestMatchers("/swagger-ui/**").permitAll()
                 .requestMatchers("/rutube.ru/admin/moderators").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.POST, "/rutube.ru/movies").hasAnyRole("ADMIN", "MODERATOR")
                 .requestMatchers(HttpMethod.POST, "/rutube.ru/genres").hasAnyRole("ADMIN", "MODERATOR")
