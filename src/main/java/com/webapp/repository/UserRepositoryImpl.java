@@ -38,7 +38,9 @@ public class UserRepositoryImpl implements UserXmlRepository {
 
 
     public void save(UserEntity user) {
+        System.out.println("yes");
         Users users = (Users) xmlService.getEntity(Users.class, "users", xmlPath);
+        System.out.println("no");
         if (users==null) users = new Users();
         boolean userExist = false;
         List<UserEntity> userEntities = users.getUser();

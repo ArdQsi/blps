@@ -128,8 +128,7 @@ public class UserService {
         calendar.setTime(timestamp);
         calendar.add(Calendar.DATE, 30);
         timestamp.setTime(calendar.getTime().getTime());
-
-        user.setSubscriptionEndDate(timestamp);
+        user.setSubscriptionEndDate(timestamp.toString());
         userRepository.save(user);
         userXmlRepository.save(user);
     }

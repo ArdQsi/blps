@@ -21,12 +21,15 @@ public class XMLService {
 
     public <T> Object getEntity(Class<T> convertClass, String aliasName, String xmlPath) {
         xstream.alias(aliasName, convertClass);
+        System.out.println("test2");
         try {
             File file = new File(xmlPath);
             FileReader reader = new FileReader(file);
             if (reader.read() > 0) {
                 JAXBContext jaxbContext = JAXBContext.newInstance(convertClass);
                 Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
+                System.out.println("test");
+                System.out.println(jaxbUnmarshaller.unmarshal(file));
                 return jaxbUnmarshaller.unmarshal(file);
             }
         } catch (JAXBException | IOException e) {

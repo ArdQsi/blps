@@ -21,10 +21,10 @@ import org.springframework.stereotype.Service;
 
 
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-import java.util.UUID;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -73,7 +73,15 @@ public class FilmService {
             throw new ResourceNotFoundException("The movie doesn't exist");
         }
         if (film.getSubscription()){
-            if(user.getSubscriptionEndDate() != null && user.getSubscriptionEndDate().after(new Timestamp(System.currentTimeMillis()))) {
+            Date subscriptionEndDate;
+            try {
+                String subscriptionEndDates = user.getSubscriptionEndDate();
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+                subscriptionEndDate = dateFormat.parse(subscriptionEndDates);
+            }catch (ParseException e) {
+                throw new RuntimeException(e);
+            }
+            if(user.getSubscriptionEndDate() != null && subscriptionEndDate.after(new Timestamp(System.currentTimeMillis()))) {
                 userService.addFilmToHistory(film.getId(), userId);
                 return new MessageDto("Watching a movie");
             }

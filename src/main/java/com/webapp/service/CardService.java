@@ -8,6 +8,7 @@ import com.webapp.model.CardEntity;
 import com.webapp.model.UserEntity;
 import com.webapp.repository.CardRepository;
 import com.webapp.repository.UserRepository;
+import com.webapp.repository.UserXmlRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

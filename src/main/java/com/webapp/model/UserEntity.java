@@ -34,8 +34,8 @@ public class UserEntity implements UserDetails {
     private long balance = 0;
     @Email
     private String email;
-    @Temporal(TemporalType.TIMESTAMP)
-    private Timestamp subscriptionEndDate;
+
+    private String subscriptionEndDate;
     private String password;
     @Enumerated(EnumType.STRING)
     private Role role;
