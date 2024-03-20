@@ -51,9 +51,8 @@ public class UserService {
     private final AuthenticationManager authenticationManager;
     private final BitronixTransactionManager bitronixTransactionManager;
 
+    @Transactional
     public MessageDto updateSubscription(Long userId) {
-        try {
-            bitronixTransactionManager.begin();
             UserEntity user = userRepository.findUserById(userId);
 
             if (user.getBalance() <= 0) {
@@ -66,21 +65,11 @@ public class UserService {
             user.setBalance(user.getBalance() - price);
             userRepository.save(user);
             updateSubscriptionEndDate(user.getId());
-            bitronixTransactionManager.commit();
             return new MessageDto("Subscription extended");
-        } catch (Exception e) {
-            try {
-                bitronixTransactionManager.rollback();
-            } catch (SystemException ex) {
-                ex.printStackTrace();
-            }
-            return new MessageDto("Transaction error!");
-        }
-
     }
 
-    public void updateBalance(UserEntity user, Long balance) {
-        user.setBalance(balance);
+    public void updateBalance(UserEntity user, Long amount) {
+        user.setBalance(user.getBalance() + amount);
         userRepository.save(user);
     }
 
