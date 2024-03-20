@@ -24,10 +24,11 @@ public class SecurityConfiguration {
         http
                 .csrf().disable()
                 .authorizeHttpRequests()
+                .requestMatchers("/swagger-ui/**").permitAll()
                 .requestMatchers("/rutube.ru/admin/moderators").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.POST, "/rutube.ru/movies").hasAnyRole("ADMIN", "MODERATOR")
                 .requestMatchers(HttpMethod.POST, "/rutube.ru/genres").hasAnyRole("ADMIN", "MODERATOR")
-                .requestMatchers("/rutube.ru/cards").hasAnyRole("ADMIN", "MODERATOR", "USER")
+                .requestMatchers("/rutube.ru/cards", "/rutube.ru/subscription").hasAnyRole("ADMIN", "MODERATOR", "USER")
                 .requestMatchers(HttpMethod.GET, "/rutube.ru/movies").hasAnyRole("ADMIN", "MODERATOR", "USER")
                 .requestMatchers(HttpMethod.DELETE, "/rutube.ru/video/*").hasAnyRole("ADMIN", "MODERATOR")
                 .requestMatchers(HttpMethod.POST, "/rutube.ru/video/*").hasAnyRole("ADMIN", "MODERATOR", "USER")

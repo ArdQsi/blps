@@ -3,13 +3,15 @@ package com.webapp.repository;
 import com.webapp.model.UserEntity;
 import com.webapp.model.Users;
 import com.webapp.service.XMLService;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.util.List;
 
 
 public class UserRepositoryImpl implements UserXmlRepository {
     private final XMLService xmlService;
-    private final String xmlPath = "C:\\Users\\denvv\\OneDrive\\Desktop\\6 сем\\БЛПС\\blps\\src\\main\\resources\\users.xml";//Указать свой путь
+    @Value("${LIST_OF_USERS}")
+    private String xmlPath;
     public UserRepositoryImpl(XMLService xmlService) {
         this.xmlService = xmlService;
     }
